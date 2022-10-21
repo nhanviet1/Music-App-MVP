@@ -46,7 +46,8 @@
             android:src="@drawable/ic_baseline_search_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -67,7 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_180"
         android:visibility="visible"
-        app:cardBackgroundColor="@android:color/black"
+        app:cardBackgroundColor="@color/black_trans"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvMusicList">
 
@@ -108,7 +109,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/progressMusic"
-                app:srcCompat="@drawable/ic_baseline_play_circle_24" />
+                app:srcCompat="@drawable/ic_baseline_play_circle_24"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/previousBtn"
@@ -118,7 +120,8 @@
                 android:src="@drawable/ic_baseline_skip_previous_24"
                 app:layout_constraintBottom_toBottomOf="@id/playBtn"
                 app:layout_constraintEnd_toStartOf="@id/playBtn"
-                app:layout_constraintTop_toTopOf="@id/playBtn" />
+                app:layout_constraintTop_toTopOf="@id/playBtn"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/nextBtn"
@@ -128,7 +131,8 @@
                 android:src="@drawable/ic_baseline_skip_next_24"
                 app:layout_constraintBottom_toBottomOf="@id/playBtn"
                 app:layout_constraintStart_toEndOf="@id/playBtn"
-                app:layout_constraintTop_toTopOf="@id/playBtn" />
+                app:layout_constraintTop_toTopOf="@id/playBtn"
+                tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

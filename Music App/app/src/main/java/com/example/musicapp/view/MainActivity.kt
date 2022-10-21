@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), SongInterface.View, ServiceInterface {
         override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
             val binder = p1 as BoundService.MyBinder
             mService = binder.getBoundService()
-            mService?.setProgressInterface(this@MainActivity)
+            mService.setProgressInterface(this@MainActivity)
             isServiceConnected = true
         }
 
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), SongInterface.View, ServiceInterface {
 
     private fun onClickItem(position: Int) {
         if (isServiceConnected){
-            if (mService.songList.isNullOrEmpty()){
+            if (mService.songList.isEmpty()){
                 mService.setData(list)
                 mService.playSong(position)
 
@@ -93,13 +93,15 @@ class MainActivity : AppCompatActivity(), SongInterface.View, ServiceInterface {
 
     override fun setPlayButton() {
         if (isServiceConnected){
-            if (mService.songList.isNullOrEmpty()){
+            if (mService.songList.isEmpty()){
                 mService.setData(list)
                 mService.playSong(mService.songHolder)
             } else {
                 mService.playSong(mService.songHolder)
             }
         }
+        setProgressBar()
+        updateProgress()
         binding.playBtn.setImageResource(R.drawable.ic_baseline_pause_circle_24)
     }
 
@@ -133,7 +135,7 @@ class MainActivity : AppCompatActivity(), SongInterface.View, ServiceInterface {
 
         binding.previousBtn.setOnClickListener {
             if (isServiceConnected){
-                if (mService.songList.isNullOrEmpty()){
+                if (mService.songList.isEmpty()){
                     mService.setData(list)
                     mService.switchSong("previous")
                 } else {
@@ -144,7 +146,7 @@ class MainActivity : AppCompatActivity(), SongInterface.View, ServiceInterface {
         }
         binding.nextBtn.setOnClickListener {
             if (isServiceConnected){
-                if (mService.songList.isNullOrEmpty()){
+                if (mService.songList.isEmpty()){
                     mService.setData(list)
                     mService.switchSong("next")
                 } else {
@@ -178,14 +180,14 @@ class MainActivity : AppCompatActivity(), SongInterface.View, ServiceInterface {
     override fun updateProgress(position: Int?) {
         Thread { binding.progressMusic.progress = position ?: 0 }.start()
 
-        if (mService?.currentPosition()!! < mService?.getDuration()!!) {
+        if (mService.currentPosition()!! < mService.getDuration()!!) {
             binding.progressMusic.progress =
-                mService?.currentPosition() ?: 0
+                mService.currentPosition() ?: 0
         }
     }
 
     private fun setProgressBar() {
-        binding.progressMusic.max = mService?.getDuration() ?: 0
+        binding.progressMusic.max = mService.getDuration() ?: 0
         binding.progressMusic.progress = 0
     }
 
@@ -194,9 +196,9 @@ class MainActivity : AppCompatActivity(), SongInterface.View, ServiceInterface {
         musicTime.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 runOnUiThread {
-                    if (mService?.currentPosition()!! < mService?.getDuration()!!) {
+                    if (mService.currentPosition()!! < mService.getDuration()!!) {
                         binding.progressMusic.progress =
-                            mService?.currentPosition() ?: 0
+                            mService.currentPosition() ?: 0
                     } else {
                         binding.progressMusic.progress = 0
                         musicTime.cancel()
